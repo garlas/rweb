@@ -1,10 +1,15 @@
-// scripts.js
-document.addEventListener("DOMContentLoaded", function () {
-  const hamburger = document.getElementById("hamburger");
-  const navList = document.querySelector(".nav-list");
+// Mengatur tombol hamburger
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("menu");
 
-  hamburger.addEventListener("click", function () {
-    this.classList.toggle("active");
-    navList.classList.toggle("active");
-  });
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (event) => {
+  if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+    hamburger.classList.remove("active");
+    navLinks.classList.remove("active");
+  }
 });

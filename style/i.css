@@ -222,6 +222,28 @@
 }
 
 /* Footer */
+/* CSS */
+
+/* Container Flex untuk Logo dan Teks */
+.ig-container {
+  display: flex;
+  align-items: center; /* Menyelaraskan logo dan teks secara vertikal */
+  gap: 10px; /* Jarak antara logo dan teks */
+}
+
+.ig-container img {
+  width: 20px;
+  height: auto;
+}
+
+.ig-container a {
+  color: #fff;
+  text-decoration: none;
+  font-style: italic;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Footer */
 footer {
   background-color: #333;
   color: #fff;
@@ -239,10 +261,27 @@ footer {
   padding: 0 20px;
 }
 
-.footer-logo img {
-  max-width: 150px;
+/* Footer Logo */
+.footer-logo {
+  display: flex;
+  align-items: center; /* Agar logo dan teks sejajar secara vertikal */
 }
 
+.footer-logo img {
+  max-width: 40px; /* Ukuran logo Instagram */
+  margin-right: 10px; /* Jarak antara logo dan teks */
+}
+
+.footer-logo span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.footer-social img {
+  max-width: 40px; /* Ukuran logo Instagram */
+  margin-right: 10px; /* Jarak antara logo dan teks */
+}
+/* Footer Links */
 .footer-links {
   display: flex;
   gap: 20px;
@@ -259,6 +298,7 @@ footer {
   color: #f4c10f;
 }
 
+/* Footer Social */
 .footer-social {
   display: flex;
   gap: 15px;
@@ -274,6 +314,7 @@ footer {
   color: #f4c10f;
 }
 
+/* Footer Bottom */
 .footer-bottom {
   text-align: center;
   margin-top: 20px;
@@ -284,6 +325,40 @@ footer {
 .footer-bottom p {
   margin: 0;
   font-size: 14px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin-bottom: 20px; /* Spasi tambahan saat di tampilan mobile */
+  }
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+  .ig-container {
+    justify-content: center; /* Menyelaraskan kontainer di tengah pada layar kecil */
+  }
+
+  .ig-container img {
+    width: 18px; /* Sesuaikan ukuran logo pada layar kecil */
+  }
+}
+
+@media (max-width: 480px) {
+  .ig-container img {
+    width: 16px; /* Sesuaikan lebih kecil pada layar yang sangat kecil */
+  }
+
+  .ig-container a {
+    font-size: 12px; /* Sesuaikan ukuran teks */
+  }
 }
 
 /* Responsiveness */
