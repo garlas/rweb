@@ -214,6 +214,8 @@
 .product-item p {
   font-size: 14px;
   color: #666;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 .product-item a {
