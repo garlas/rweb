@@ -223,6 +223,68 @@
   color: inherit;
 }
 
+.tentang-kami {
+  background-color: #f9f9f9;
+  padding: 40px 15px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 3s ease-out, transform 3s ease-out;
+}
+
+.tentang-kami .container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.tentang-kami h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.tentang-kami p {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.tentang-kami h4 {
+  padding: 2px;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 600px) {
+  .tentang-kami {
+    padding: 60px 20px;
+  }
+
+  .tentang-kami .container {
+    max-width: 800px;
+    padding: 0;
+  }
+
+  .tentang-kami h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+
+  .tentang-kami p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+}
+
+/* Animasi Muncul */
+.tentang-kami.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Footer */
 /* CSS */
 
