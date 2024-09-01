@@ -7,11 +7,22 @@ hamburger.addEventListener("click", () => {
   navLinks.classList.toggle("active");
 });
 
+// Menutup menu jika mengklik di luar area menu atau tombol hamburger
 document.addEventListener("click", (event) => {
   if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
     hamburger.classList.remove("active");
     navLinks.classList.remove("active");
   }
+});
+
+// Menutup menu jika salah satu tautan diklik
+const navItems = document.querySelectorAll(".nav-list li a");
+
+navItems.forEach((link) => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navLinks.classList.remove("active");
+  });
 });
 
 // animasi
@@ -50,5 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       alert("Invalid username or password");
     }
+  });
+});
+
+// animasi skroll halaman
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute("href")).scrollIntoView({
+      behavior: "smooth",
+    });
   });
 });

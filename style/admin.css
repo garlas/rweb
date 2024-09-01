@@ -1,5 +1,9 @@
 /* admin.css */
 
+html {
+  scroll-behavior: smooth;
+}
+
 .login-container {
   width: 100%;
   max-width: 400px;
