@@ -8,43 +8,55 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
+const apiUrl = "http://127.0.0.1:3000"; // Atur URL API Anda di sini
+
 function loadProducts() {
-  fetch("http://127.0.0.1:3000/products") // Pastikan URL sesuai dengan server Anda
+  fetch(`${apiUrl}/products`)
     .then((response) => response.json())
     .then((products) => {
       const productList = document.querySelector(".product-list");
-      productList.innerHTML = "";
+      if (productList) {
+        productList.innerHTML = "";
 
-      if (products.length === 0) {
-        productList.innerHTML = "<p>Tidak ada produk yang tersedia.</p>";
-      } else {
-        products.forEach(function (product) {
-          const productItem = document.createElement("div");
-          productItem.classList.add("product-item");
+        if (products.length === 0) {
+          productList.innerHTML = "<p>Tidak ada produk yang tersedia.</p>";
+        } else {
+          products.forEach(function (product) {
+            const productItem = document.createElement("div");
+            productItem.classList.add("product-item");
 
-          productItem.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" />
-            <div>
-              <h3>${product.name}</h3>
-              <p>${product.price}</p>
-              <p>${product.description}</p>
-              <a href="https://wa.me/${product.whatsapp}">Hubungi di WhatsApp</a>
-            </div>
-            <div class="edit-delete-buttons">
-              <button class="edit-button" onclick="editProduct('${product._id}')">Edit</button>
-              <button class="delete-button" onclick="deleteProduct('${product._id}')">Hapus</button>
-            </div>
-          `;
+            productItem.innerHTML = `
+              <img src="${product.image}" alt="${product.name}" />
+              <div>
+                <h3>${product.name}</h3>
+                <p>${product.price}</p>
+                <p>${product.description}</p>
+                <a href="https://wa.me/${
+                  product.whatsapp
+                }">Hubungi di WhatsApp</a>
+              </div>
+              ${
+                document.body.getAttribute("data-page") === "dashboard"
+                  ? `
+                <div class="edit-delete-buttons">
+                  <button class="edit-button" onclick="editProduct('${product._id}')">Edit</button>
+                  <button class="delete-button" onclick="deleteProduct('${product._id}')">Hapus</button>
+                </div>
+              `
+                  : ""
+              }
+            `;
 
-          productList.appendChild(productItem);
-        });
+            productList.appendChild(productItem);
+          });
+        }
       }
     })
     .catch((error) => console.error("Error loading products:", error));
 }
 
 function updateProduct(productId, updatedProduct) {
-  fetch(`http://127.0.0.1:3000/products/${productId}`, {
+  fetch(`${apiUrl}/products/${productId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +68,7 @@ function updateProduct(productId, updatedProduct) {
 }
 
 function deleteProduct(productId) {
-  fetch(`http://127.0.0.1:3000/products/${productId}`, {
+  fetch(`${apiUrl}/products/${productId}`, {
     method: "DELETE",
   })
     .then(() => loadProducts())
@@ -64,7 +76,7 @@ function deleteProduct(productId) {
 }
 
 function editProduct(productId) {
-  fetch(`http://127.0.0.1:3000/products/${productId}`)
+  fetch(`${apiUrl}/products/${productId}`)
     .then((response) => response.json())
     .then((product) => {
       if (product) {
@@ -103,8 +115,8 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
 
     const method = productId ? "PUT" : "POST";
     const url = productId
-      ? `http://127.0.0.1:3000/products/${productId}`
-      : "http://127.0.0.1:3000/products";
+      ? `${apiUrl}/products/${productId}`
+      : `${apiUrl}/products`;
 
     fetch(url, {
       method: method,
@@ -115,9 +127,9 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(
-            "Network response was not ok: " + response.statusText
-          );
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
         }
         return response.json();
       })
