@@ -1,9 +1,15 @@
 window.addEventListener("DOMContentLoaded", function () {
   loadProducts();
+
+  // Setel atribut data halamannya
+  document.body.setAttribute(
+    "data-page",
+    window.location.pathname.includes("dashboard.html") ? "dashboard" : "home"
+  );
 });
 
 function loadProducts() {
-  fetch("/products")
+  fetch("http://127.0.0.1:3000/products") // Pastikan URL sesuai dengan server Anda
     .then((response) => response.json())
     .then((products) => {
       const productList = document.querySelector(".product-list");
@@ -38,7 +44,7 @@ function loadProducts() {
 }
 
 function updateProduct(productId, updatedProduct) {
-  fetch(`/products/${productId}`, {
+  fetch(`http://127.0.0.1:3000/products/${productId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +56,7 @@ function updateProduct(productId, updatedProduct) {
 }
 
 function deleteProduct(productId) {
-  fetch(`/products/${productId}`, {
+  fetch(`http://127.0.0.1:3000/products/${productId}`, {
     method: "DELETE",
   })
     .then(() => loadProducts())
@@ -58,7 +64,7 @@ function deleteProduct(productId) {
 }
 
 function editProduct(productId) {
-  fetch(`/products/${productId}`)
+  fetch(`http://127.0.0.1:3000/products/${productId}`)
     .then((response) => response.json())
     .then((product) => {
       if (product) {
@@ -96,7 +102,9 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     };
 
     const method = productId ? "PUT" : "POST";
-    const url = productId ? `/products/${productId}` : "/products";
+    const url = productId
+      ? `http://127.0.0.1:3000/products/${productId}`
+      : "http://127.0.0.1:3000/products";
 
     fetch(url, {
       method: method,
@@ -105,12 +113,21 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
       },
       body: JSON.stringify(product),
     })
-      .then(() => {
-        loadProducts();
-        document.getElementById("productForm").reset();
-        document.getElementById("productId").value = "";
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok: " + response.statusText
+          );
+        }
+        return response.json();
       })
-      .catch((error) => console.error("Error:", error));
+      .then((data) => {
+        console.log("Success:", data);
+        loadProducts(); // Refresh products list
+      })
+      .catch((error) => {
+        console.error("Error during fetch:", error);
+      });
   };
 
   if (productImage) {

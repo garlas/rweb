@@ -4,6 +4,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Sembunyikan tombol di halaman utama */
+.product-item .edit-delete-buttons {
+  display: none;
+}
+
+/* Tampilkan tombol di dashboard */
+body[data-page="dashboard"] .product-item .edit-delete-buttons {
+  display: block;
+}
+
 .login-container {
   width: 100%;
   max-width: 400px;
