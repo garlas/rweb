@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Tambah Produk</title>
+    <link rel="stylesheet" href="style/admin.css" />
+    <link rel="stylesheet" href="style/i.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">Rinn</div>
+        <nav class="navbar">
+          <ul class="nav-list" id="menu">
+            <li><a href="index.html#tentang-kami">Tentang Kami</a></li>
+            <li><a href="#katalog">Produk</a></li>
+            <li><a href="login.html">Member</a></li>
+            <li><a href="#contact">Kontak</a></li>
+          </ul>
+          <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="img/d.gif" alt="Deskripsi GIF" class="hero-img" />
+      <div class="hero-overlay"></div>
+    </section>
+
+    <h1>Kelola Produk</h1>
+
+    <!-- Form untuk menambah/edit produk -->
+    <form id="productForm">
+      <input type="hidden" id="productId" value="" />
+      <label for="productName">Nama Produk:</label>
+      <input type="text" id="productName" name="productName" required />
+
+      <label for="productPrice">Harga Produk:</label>
+      <input type="text" id="productPrice" name="productPrice" required />
+
+      <label for="productImage">Gambar Produk:</label>
+      <input
+        type="file"
+        id="productImage"
+        name="productImage"
+        accept="image/*"
+      />
+
+      <label for="productDescription">Deskripsi Produk:</label>
+      <textarea
+        id="productDescription"
+        name="productDescription"
+        required
+      ></textarea>
+
+      <label for="productWhatsApp">Nomor WhatsApp:</label>
+      <input type="text" id="productWhatsApp" name="productWhatsApp" required />
+
+      <button type="submit">Simpan Produk</button>
+    </form>
+
+    <!-- Daftar produk -->
+    <div class="product-list"></div>
+
+    <script src="main.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

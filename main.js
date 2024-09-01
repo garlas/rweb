@@ -28,3 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", showTentangKami);
   showTentangKami(); // Check immediately if the section is in view
 });
+
+// login.js
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.querySelector("#loginForm");
+
+  // Tentukan username dan password yang diizinkan
+  const validUsername = "1";
+  const validPassword = "1";
+
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // Mencegah pengiriman form default
+
+    const username = document.querySelector("#username").value;
+    const password = document.querySelector("#password").value;
+
+    // Memeriksa apakah username dan password sesuai
+    if (username === validUsername && password === validPassword) {
+      alert("Login successful!");
+      window.location.href = "dashboard.html"; // Arahkan ke halaman yang diinginkan setelah login
+    } else {
+      alert("Invalid username or password");
+    }
+  });
+});
