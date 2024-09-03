@@ -179,6 +179,8 @@ button[type="submit"]:hover {
   color: #666;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  padding: 5px;
+  color: #ff0019;
 }
 
 .product-item a {

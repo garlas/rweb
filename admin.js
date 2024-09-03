@@ -8,7 +8,19 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "http://127.0.0.1:3001"; // Atur URL API Anda di sini
+const apiUrl = "http://127.0.0.1:3001"; // Ganti dengan URL API yang sesuai
+
+function formatRupiah(number) {
+  let formatted = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(number);
+  // Menghilangkan bagian desimal jika ada
+  if (formatted.includes(",00")) {
+    formatted = formatted.replace(",00", "");
+  }
+  return formatted;
+}
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
@@ -29,11 +41,11 @@ function loadProducts() {
               <img src="${product.image}" alt="${product.name}" />
               <div>
                 <h3>${product.name}</h3>
-                <p>${product.price}</p>
+                <p>${formatRupiah(product.price)}</p>
                 <p>${product.description}</p>
                 <a href="https://wa.me/${
                   product.whatsapp
-                }">Hubungi di WhatsApp</a>
+                }?text=Haloo, Apa stok masih ada?">Hubungi di WhatsApp</a>
               </div>
               ${
                 document.body.getAttribute("data-page") === "dashboard"
@@ -97,7 +109,9 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
 
   const productId = document.getElementById("productId").value;
   const productName = document.getElementById("productName").value;
-  const productPrice = document.getElementById("productPrice").value;
+  const productPrice = parseFloat(
+    document.getElementById("productPrice").value
+  ); // Pastikan harga sebagai angka
   const productImage = document.getElementById("productImage").files[0];
   const productDescription =
     document.getElementById("productDescription").value;
@@ -107,7 +121,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   reader.onload = function (e) {
     const product = {
       name: productName,
-      price: productPrice,
+      price: productPrice, // Tetap sebagai angka
       image: e.target.result,
       description: productDescription,
       whatsapp: productWhatsApp,
@@ -149,4 +163,3 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     reader.onload({ target: { result: existingImage } });
   }
 });
-// K2bC3nOQegthsWsbh1BW8liVZZGcLqw7AibifCq0Y7YnXNuzfwVPPvl7MpQNbeM1
