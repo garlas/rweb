@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "http://127.0.0.1:3000"; // Atur URL API Anda di sini
+const apiUrl = "http://127.0.0.1:3001"; // Atur URL API Anda di sini
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
@@ -149,3 +149,4 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     reader.onload({ target: { result: existingImage } });
   }
 });
+// K2bC3nOQegthsWsbh1BW8liVZZGcLqw7AibifCq0Y7YnXNuzfwVPPvl7MpQNbeM1
