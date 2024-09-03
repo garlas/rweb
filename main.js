@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // login.js
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("#loginForm");
+  const errorMessage = document.querySelector("#error-message");
 
   // Tentukan username dan password yang diizinkan
   const validUsername = "1";
@@ -56,10 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Memeriksa apakah username dan password sesuai
     if (username === validUsername && password === validPassword) {
-      alert("Login successful!");
-      window.location.href = "dashboard.html"; // Arahkan ke halaman yang diinginkan setelah login
+      window.location.href = "dashboard.html"; // halaman dashboard
     } else {
-      alert("Invalid username or password");
+      errorMessage.textContent = "Password salah. Silakan coba lagi.";
+      errorMessage.style.display = "block";
     }
   });
 });

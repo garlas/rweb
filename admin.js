@@ -22,6 +22,16 @@ function formatRupiah(number) {
   return formatted;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const textarea = document.querySelector("#productDescription");
+  fetch(apiUrl)
+    .then((response) => response.text()) // Mengambil data sebagai teks
+    .then((text) => {
+      textarea.value = "Tanyakan Stok Sebelum Order!!"; // Menetapkan teks ke textarea
+    })
+    .catch((error) => console.error("Error loading text data:", error));
+});
+
 function loadProducts() {
   fetch(`${apiUrl}/products`)
     .then((response) => response.json())
