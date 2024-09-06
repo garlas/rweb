@@ -19,18 +19,18 @@
 
 /* Header */
 .header {
-  background-color: #e0dcd3;
+  background-color: #1d1d1d;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #d5d5d5;
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: #cbafaf;
 }
 
 .navbar ul {
@@ -48,8 +48,8 @@
 
 .navbar ul li a {
   text-decoration: none;
-  color: #333;
-  font-size: 14px;
+  color: #c92b2b;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -86,7 +86,7 @@
 .hamburger span {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: #c3bdbd;
   margin: 2px 0;
   border-radius: 3px;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -107,7 +107,9 @@
 /* Dropdown menu styling for smaller screens */
 .navbar ul.nav-list {
   display: flex; /* Always display as flex for larger screens */
-  gap: 20px;
+  gap: 30px;
+  margin: 2px;
+  padding: 10px 20px;
   z-index: 1000000;
 }
 
@@ -124,7 +126,7 @@
     display: none; /* Hide by default on small screens */
     flex-direction: column;
     position: fixed;
-    top: 60px;
+    top: 45px;
     right: 0;
     width: 250px;
     background-color: #ffffff;

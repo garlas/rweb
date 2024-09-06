@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Memeriksa apakah username dan password sesuai
     if (username === validUsername && password === validPassword) {
-      window.location.href = "dashboard.html"; // halaman dashboard
+      window.location.href = "db.html"; // halaman dashboard
     } else {
       errorMessage.textContent = "Password salah. Silakan coba lagi.";
       errorMessage.style.display = "block";
@@ -74,4 +74,20 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       behavior: "smooth",
     });
   });
+});
+
+document.getElementById("aboutForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  // Ambil teks dari textarea
+  const aboutText = document.getElementById("aboutText").value;
+
+  // Simpan teks baru di localStorage
+  localStorage.setItem("aboutUs", aboutText);
+
+  // Tampilkan pesan bahwa perubahan berhasil disimpan
+  alert('Teks "Tentang Kami" berhasil diperbarui!');
+
+  // Arahkan kembali ke halaman home untuk melihat perubahan
+  window.location.href = "home.html";
 });

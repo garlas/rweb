@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Admin</title>
-    <link rel="stylesheet" href="style/s.css" />
+    <title>Dashboard - SMAN 1 Gedeg</title>
     <link rel="stylesheet" href="style/i.css" />
-    <link rel="stylesheet" href="style/admin.css" />
+    <link rel="stylesheet" href="style/s.css" />
   </head>
-  <!-- Header -->
   <body>
+    <!-- Header -->
     <header class="header">
       <div class="container">
         <div class="logo">r-smage</div>
@@ -17,8 +16,6 @@
           <ul class="nav-list" id="menu">
             <li><a href="index.html#tentang-kami">Tentang Kami</a></li>
             <li><a href="index.html#product-grid">Produk</a></li>
-            <li><a href="login.html">Admin</a></li>
-            <li><a href="#contact">Kontak</a></li>
           </ul>
           <div class="hamburger" id="hamburger">
             <span></span>
@@ -35,22 +32,31 @@
       <div class="hero-overlay"></div>
     </section>
 
-    <div class="login-container">
-      <div class="login-form">
-        <h2>Login</h2>
-        <form id="loginForm">
-          <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit" class="btn-login">Login</button>
-          <div id="error-message" style="color: red; display: none"></div>
-        </form>
+    <!-- Main Content -->
+    <main class="container">
+      <h1>Dashboard</h1>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-item">
+          <h2><a href="dashboard.html">Kelola Produk</a></h2>
+          <p class="p">Kelola produk-produk yang ada di katalog.</p>
+        </div>
+        <div class="dashboard-item">
+          <h2><a href="https://discord.gg/GUyNwcVz5z">Aspirasi</a></h2>
+          <p class="p">Kelola dan tinjau aspirasi dari siswa.</p>
+        </div>
+        <!--  <div class="dashboard-item">
+           <h2><a href="settings.html">Pengaturan</a></h2>
+          <p>Ubah pengaturan sistem dan konfigurasi.</p>
+        </div> -->
       </div>
+    </main>
+
+    <!-- Footer -->
+        <div class="footer-bottom">
+          <p>&copy; 2024 Created By Garin Nugroho.</p>
+        </div>
+      </footer>
     </div>
     <script src="main.js"></script>
     <script src="admin.js"></script>

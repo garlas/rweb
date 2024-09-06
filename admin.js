@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "http://127.0.0.1:3001"; // Ganti dengan URL API yang sesuai
+const apiUrl = "http://127.0.0.1:3002"; // URL API
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
