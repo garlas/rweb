@@ -1,8 +1,9 @@
+require("dotenv").config();
+const connectDB = require("./db");
+const productRoutes = require("./routes/products");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const connectDB = require("./db");
-require("dotenv").config(); // Memuat variabel lingkungan dari file .env
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(cors());
 app.use(express.json()); // untuk parsing application/json
 
 // Rute
-app.use("/products", require("./routes/products"));
+app.use("/products", productRoutes);
 
 // Rute utama
 app.get("/", (req, res) => {

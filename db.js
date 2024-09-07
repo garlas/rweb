@@ -1,9 +1,15 @@
+require("dotenv").config(); // Memuat variabel lingkungan dari .env
 const mongoose = require("mongoose");
-require("dotenv").config(); // Memuat variabel lingkungan dari file .env
+
+const MONGO_URI = process.env.MONGODB_URI; // Mengambil URI dari variabel lingkungan
+console.log("Mongo URI:", MONGO_URI); // Debugging
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI); // Menggunakan URL dari .env
+    await mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("MongoDB connection error:", error);
