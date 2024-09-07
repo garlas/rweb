@@ -24,7 +24,12 @@ function formatRupiah(number) {
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((products) => {
       const productList = document.querySelector(".product-list");
       if (productList) {
@@ -33,7 +38,7 @@ function loadProducts() {
         if (products.length === 0) {
           productList.innerHTML = "<p>Tidak ada produk yang tersedia.</p>";
         } else {
-          products.forEach(function (product) {
+          products.forEach((product) => {
             const productItem = document.createElement("div");
             productItem.classList.add("product-item");
 
@@ -75,6 +80,12 @@ function updateProduct(productId, updatedProduct) {
     },
     body: JSON.stringify(updatedProduct),
   })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to update product");
+      }
+      return response.json();
+    })
     .then(() => loadProducts())
     .catch((error) => console.error("Error updating product:", error));
 }
@@ -83,13 +94,24 @@ function deleteProduct(productId) {
   fetch(`${apiUrl}/products/${productId}`, {
     method: "DELETE",
   })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to delete product");
+      }
+      return response.json();
+    })
     .then(() => loadProducts())
     .catch((error) => console.error("Error deleting product:", error));
 }
 
 function editProduct(productId) {
   fetch(`${apiUrl}/products/${productId}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch product");
+      }
+      return response.json();
+    })
     .then((product) => {
       if (product) {
         document.getElementById("productId").value = productId;
@@ -111,17 +133,18 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   const productName = document.getElementById("productName").value;
   const productPrice = parseFloat(
     document.getElementById("productPrice").value
-  ); // Pastikan harga sebagai angka
-  const productImage = document.getElementById("productImage").files[0];
+  );
   const productDescription =
     document.getElementById("productDescription").value;
   const productWhatsApp = document.getElementById("productWhatsApp").value;
+
+  const productImage = document.getElementById("productImage").files[0];
 
   const reader = new FileReader();
   reader.onload = function (e) {
     const product = {
       name: productName,
-      price: productPrice, // Tetap sebagai angka
+      price: productPrice,
       image: e.target.result,
       description: productDescription,
       whatsapp: productWhatsApp,
@@ -149,7 +172,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
       })
       .then((data) => {
         console.log("Success:", data);
-        loadProducts(); // Refresh products list
+        loadProducts(); // Refresh daftar produk
       })
       .catch((error) => {
         console.error("Error during fetch:", error);
