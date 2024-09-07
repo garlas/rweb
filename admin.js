@@ -1,4 +1,4 @@
-const apiUrl = "https://rsmage.site/api"; // Ganti dengan URL API server Anda
+const apiUrl = "https://rsmage.site"; // Ganti dengan URL API server Anda
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
