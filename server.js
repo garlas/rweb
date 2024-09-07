@@ -3,6 +3,7 @@ const productRoutes = require("./routes/products");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require("dotenv").config(); // Untuk memuat variabel lingkungan dari .env
 
 const app = express();
 
@@ -12,12 +13,10 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(cors());
 
-// Rute-rute lainnya...
-
 // Koneksi ke MongoDB Atlas
 connectDB();
 
-// MidwGmiQtrjTMm5Us8tdleware
+// Middleware
 app.use(cors());
 app.use(express.json()); // untuk parsing application/json
 

@@ -1,4 +1,14 @@
-const apiUrl = "https://rsmage.site"; // Ganti dengan URL API server Anda
+window.addEventListener("DOMContentLoaded", function () {
+  loadProducts();
+
+  // Setel atribut data halamannya
+  document.body.setAttribute(
+    "data-page",
+    window.location.pathname.includes("dashboard.html") ? "dashboard" : "home"
+  );
+});
+
+const apiUrl = "https://rsmage.site"; // URL API
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
@@ -11,23 +21,6 @@ function formatRupiah(number) {
   }
   return formatted;
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  loadProducts();
-  // Setel atribut data halamannya
-  document.body.setAttribute(
-    "data-page",
-    window.location.pathname.includes("dashboard.html") ? "dashboard" : "home"
-  );
-
-  const textarea = document.querySelector("#productDescription");
-  fetch(`${apiUrl}/text-data`)
-    .then((response) => response.text())
-    .then((text) => {
-      textarea.value = text || "Tanyakan Stok Sebelum Order!!";
-    })
-    .catch((error) => console.error("Error loading text data:", error));
-});
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
@@ -118,7 +111,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   const productName = document.getElementById("productName").value;
   const productPrice = parseFloat(
     document.getElementById("productPrice").value
-  );
+  ); // Pastikan harga sebagai angka
   const productImage = document.getElementById("productImage").files[0];
   const productDescription =
     document.getElementById("productDescription").value;
@@ -128,7 +121,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   reader.onload = function (e) {
     const product = {
       name: productName,
-      price: productPrice,
+      price: productPrice, // Tetap sebagai angka
       image: e.target.result,
       description: productDescription,
       whatsapp: productWhatsApp,
