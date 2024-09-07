@@ -1,9 +1,8 @@
-const connectDB = require("./db");
-const productRoutes = require("./routes/products");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config(); // Untuk memuat variabel lingkungan dari .env
+const connectDB = require("./db");
+require("dotenv").config(); // Memuat variabel lingkungan dari file .env
 
 const app = express();
 
@@ -21,7 +20,7 @@ app.use(cors());
 app.use(express.json()); // untuk parsing application/json
 
 // Rute
-app.use("/products", productRoutes);
+app.use("/products", require("./routes/products"));
 
 // Rute utama
 app.get("/", (req, res) => {
@@ -32,5 +31,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// mongodb+srv://garinnugroho1345:wGmiQtrjTMm5Us8t@cluster0.mongodb.net/myDatabase?retryWrites=true&w=majority;
