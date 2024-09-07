@@ -1,14 +1,4 @@
-window.addEventListener("DOMContentLoaded", function () {
-  loadProducts();
-
-  // Setel atribut data halamannya
-  document.body.setAttribute(
-    "data-page",
-    window.location.pathname.includes("dashboard.html") ? "dashboard" : "home"
-  );
-});
-
-const apiUrl = "http://127.0.0.1:3002"; // URL API
+const apiUrl = "https://rsmage.site/api"; // Ganti dengan URL API server Anda
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
@@ -23,11 +13,18 @@ function formatRupiah(number) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  loadProducts();
+  // Setel atribut data halamannya
+  document.body.setAttribute(
+    "data-page",
+    window.location.pathname.includes("dashboard.html") ? "dashboard" : "home"
+  );
+
   const textarea = document.querySelector("#productDescription");
-  fetch(apiUrl)
-    .then((response) => response.text()) // Mengambil data sebagai teks
+  fetch(`${apiUrl}/text-data`)
+    .then((response) => response.text())
     .then((text) => {
-      textarea.value = "Tanyakan Stok Sebelum Order!!"; // Menetapkan teks ke textarea
+      textarea.value = text || "Tanyakan Stok Sebelum Order!!";
     })
     .catch((error) => console.error("Error loading text data:", error));
 });
@@ -121,7 +118,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   const productName = document.getElementById("productName").value;
   const productPrice = parseFloat(
     document.getElementById("productPrice").value
-  ); // Pastikan harga sebagai angka
+  );
   const productImage = document.getElementById("productImage").files[0];
   const productDescription =
     document.getElementById("productDescription").value;
@@ -131,7 +128,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
   reader.onload = function (e) {
     const product = {
       name: productName,
-      price: productPrice, // Tetap sebagai angka
+      price: productPrice,
       image: e.target.result,
       description: productDescription,
       whatsapp: productWhatsApp,
