@@ -20,7 +20,7 @@ app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
 
 // Import Routes
-const productRoutes = require("./routes/products");
+const productRoutes = require("./products");
 
 // Routes Middleware
 app.use("/api/products", productRoutes); // All routes under /api/products will be handled by productRoutes
