@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "https://rsmage.site/Products"; // URL API
+const apiUrl = "https://rsmage.site"; // URL API
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
