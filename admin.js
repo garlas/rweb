@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "http://rsmage.site:3000"; // URL API
+const apiUrl = "https://rsmage.site"; // URL API
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
@@ -197,6 +197,35 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     reader.readAsDataURL(productImage);
   } else {
     const existingImage = document.getElementById("productImage").dataset.image;
-    reader.onload({ target: { result: existingImage } });
+    const product = {
+      name: productName,
+      price: productPrice,
+      image: existingImage, // Gunakan gambar yang sudah ada
+      description: productDescription,
+      whatsapp: productWhatsApp,
+    };
+
+    fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        loadProducts(); // Refresh daftar produk
+      })
+      .catch((error) => {
+        console.error("Error during fetch:", error);
+      });
   }
 });
