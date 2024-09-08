@@ -7,6 +7,14 @@ dotenv.config(); // Load environment variables from .env
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "https://rsmage.site", // Domain dengan HTTPS
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
 // Middleware
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
