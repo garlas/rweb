@@ -7,6 +7,7 @@ dotenv.config(); // Load environment variables from .env
 
 const app = express();
 
+// Middleware
 app.use(
   cors({
     origin: "https://rsmage.site", // Domain dengan HTTPS
@@ -14,9 +15,6 @@ app.use(
     credentials: true,
   })
 );
-
-// Middleware
-app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
 
 // Import Routes
@@ -37,6 +35,12 @@ mongoose
 // Home Route
 app.get("/", (req, res) => {
   res.send("Welcome to the Products API");
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 // Start the Server
