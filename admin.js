@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "https://rsmage.site"; // URL API
+const apiUrl = "http://rsmage.site:3000"; // URL API
 
 function formatRupiah(number) {
   let formatted = new Intl.NumberFormat("id-ID", {
@@ -21,6 +21,20 @@ function formatRupiah(number) {
   }
   return formatted;
 }
+
+fetch(`${apiUrl}/products`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((products) => {
+    // Proses produk
+  })
+  .catch((error) => {
+    console.error("Error loading products:", error.message);
+  });
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
