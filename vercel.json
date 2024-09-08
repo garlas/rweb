@@ -13,11 +13,10 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/server.js"
     }
   ],
   "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "OTHER_ENV_VAR": "value"
+    "MONGODB_URI": "@mongodb_uri"
   }
 }

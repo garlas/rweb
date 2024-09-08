@@ -37,6 +37,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Products API");
 });
 
+app.use(
+  "/api/products",
+  (req, res, next) => {
+    console.log(`Received request for ${req.method} ${req.originalUrl}`);
+    next();
+  },
+  productRoutes
+);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
