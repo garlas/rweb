@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Import dan gunakan router
-const productRouter = require("./routes/products");
+const productRouter = require("./api/products");
 app.use("/products", productRouter);
 
 // Error Handling Middleware
