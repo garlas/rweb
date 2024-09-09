@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const port = 3000; // Port server
+const port = 27017; // Port server
 
 // Middleware
 app.use(express.json({ limit: "10mb" }));
