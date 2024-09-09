@@ -8,39 +8,15 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-const apiUrl = "https://rsmage.site"; // URL API
-
-function formatRupiah(number) {
-  let formatted = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  }).format(number);
-  // Menghilangkan bagian desimal jika ada
-  if (formatted.includes(",00")) {
-    formatted = formatted.replace(",00", "");
-  }
-  return formatted;
-}
-
-fetch(`${apiUrl}/products`)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then((products) => {
-    // Proses produk
-  })
-  .catch((error) => {
-    console.error("Error loading products:", error.message);
-  });
+const apiUrl = "https://rsmage.site"; // Atur URL API Anda di sini
 
 function loadProducts() {
   fetch(`${apiUrl}/products`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        return response.text().then((text) => {
+          throw new Error(`Error ${response.status}: ${text}`);
+        });
       }
       return response.json();
     })
@@ -52,7 +28,7 @@ function loadProducts() {
         if (products.length === 0) {
           productList.innerHTML = "<p>Tidak ada produk yang tersedia.</p>";
         } else {
-          products.forEach((product) => {
+          products.forEach(function (product) {
             const productItem = document.createElement("div");
             productItem.classList.add("product-item");
 
@@ -60,11 +36,11 @@ function loadProducts() {
               <img src="${product.image}" alt="${product.name}" />
               <div>
                 <h3>${product.name}</h3>
-                <p>${formatRupiah(product.price)}</p>
+                <p>Rp ${parseInt(product.price).toLocaleString()}</p>
                 <p>${product.description}</p>
                 <a href="https://wa.me/${
                   product.whatsapp
-                }?text=Haloo, Apa stok masih ada?">Hubungi di WhatsApp</a>
+                }">Hubungi di WhatsApp</a>
               </div>
               ${
                 document.body.getAttribute("data-page") === "dashboard"
@@ -96,12 +72,17 @@ function updateProduct(productId, updatedProduct) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Failed to update product");
+        return response.text().then((text) => {
+          throw new Error(`Error ${response.status}: ${text}`);
+        });
       }
       return response.json();
     })
-    .then(() => loadProducts())
-    .catch((error) => console.error("Error updating product:", error));
+    .then((data) => {
+      console.log("Success:", data);
+      loadProducts(); // Refresh products list
+    })
+    .catch((error) => console.error("Error during fetch:", error));
 }
 
 function deleteProduct(productId) {
@@ -110,7 +91,9 @@ function deleteProduct(productId) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Failed to delete product");
+        return response.text().then((text) => {
+          throw new Error(`Error ${response.status}: ${text}`);
+        });
       }
       return response.json();
     })
@@ -122,7 +105,9 @@ function editProduct(productId) {
   fetch(`${apiUrl}/products/${productId}`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Failed to fetch product");
+        return response.text().then((text) => {
+          throw new Error(`Error ${response.status}: ${text}`);
+        });
       }
       return response.json();
     })
@@ -145,14 +130,11 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
 
   const productId = document.getElementById("productId").value;
   const productName = document.getElementById("productName").value;
-  const productPrice = parseFloat(
-    document.getElementById("productPrice").value
-  );
+  const productPrice = document.getElementById("productPrice").value;
+  const productImage = document.getElementById("productImage").files[0];
   const productDescription =
     document.getElementById("productDescription").value;
   const productWhatsApp = document.getElementById("productWhatsApp").value;
-
-  const productImage = document.getElementById("productImage").files[0];
 
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -179,53 +161,24 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
-            throw new Error(text);
+            throw new Error(`Error ${response.status}: ${text}`);
           });
         }
         return response.json();
       })
       .then((data) => {
         console.log("Success:", data);
-        loadProducts(); // Refresh daftar produk
+        loadProducts(); // Refresh products list
       })
-      .catch((error) => {
-        console.error("Error during fetch:", error);
-      });
+      .catch((error) => console.error("Error during fetch:", error));
   };
 
   if (productImage) {
     reader.readAsDataURL(productImage);
   } else {
     const existingImage = document.getElementById("productImage").dataset.image;
-    const product = {
-      name: productName,
-      price: productPrice,
-      image: existingImage, // Gunakan gambar yang sudah ada
-      description: productDescription,
-      whatsapp: productWhatsApp,
-    };
-
-    fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        loadProducts(); // Refresh daftar produk
-      })
-      .catch((error) => {
-        console.error("Error during fetch:", error);
-      });
+    if (existingImage) {
+      reader.onload({ target: { result: existingImage } });
+    }
   }
 });

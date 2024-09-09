@@ -1,59 +1,36 @@
+require("dotenv").config(); // Gunakan dotenv untuk kredensial sensitif
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
 
-dotenv.config(); // Load environment variables from .env
-
 const app = express();
+const port = 3000; // Port server
 
 // Middleware
-app.use(
-  cors({
-    origin: "https://rsmage.site", // Domain dengan HTTPS
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(cors());
 
-// Import Routes
-const productRoutes = require("./api/products");
+// MongoDB connection
+const mongoURI = process.env.MONGO_URI; // Menggunakan .env untuk URI MongoDB
+if (!mongoURI) {
+  console.error("MONGO_URI tidak ditemukan di .env");
+  process.exit(1); // Keluar dari aplikasi jika MONGO_URI tidak ditemukan
+}
 
-// Routes Middleware
-app.use("/api/products", productRoutes); // All routes under /api/products will be handled by productRoutes
-
-// Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Failed to connect to MongoDB:", err));
+  .connect(mongoURI)
+  .then(() => console.log("Terhubung ke MongoDB"))
+  .catch((err) => console.error("Kesalahan koneksi MongoDB:", err));
 
-// Home Route
-app.get("/", (req, res) => {
-  res.send("Welcome to the Products API");
+// Import routes
+const productRoutes = require("./routes/products");
+
+// Use routes
+app.use("/products", productRoutes);
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
-
-app.use(
-  "/api/products",
-  (req, res, next) => {
-    console.log(`Received request for ${req.method} ${req.originalUrl}`);
-    next();
-  },
-  productRoutes
-);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
-
-// Start the Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// gYhasslajjU65fffaJ
